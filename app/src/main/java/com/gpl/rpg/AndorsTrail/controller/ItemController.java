@@ -7,6 +7,7 @@ import com.gpl.rpg.AndorsTrail.AndorsTrailPreferences;
 import com.gpl.rpg.AndorsTrail.context.ControllerContext;
 import com.gpl.rpg.AndorsTrail.context.WorldContext;
 import com.gpl.rpg.AndorsTrail.controller.listeners.QuickSlotListeners;
+import com.gpl.rpg.AndorsTrail.controller.CombatController;
 import com.gpl.rpg.AndorsTrail.model.ModelContainer;
 import com.gpl.rpg.AndorsTrail.model.ability.SkillCollection;
 import com.gpl.rpg.AndorsTrail.model.ability.traits.AbilityModifierTraits;
@@ -92,6 +93,8 @@ public final class ItemController {
 
 		controllers.actorStatsController.applyUseEffect(player, null, type.effects_use);
 		world.model.statistics.addItemUsage(type);
+
+		if (world.model.uiSelections.isInCombat && !controllers.combatController.playerHasApLeft()) controllers.combatController.endPlayerTurn();
 
 		//TODO: provide feedback that the item has been used.
 		//context.mainActivity.message(androidContext.getResources().getString(R.string.inventory_item_used, type.name));
